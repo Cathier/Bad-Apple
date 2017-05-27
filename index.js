@@ -14,7 +14,7 @@ var bell=[0, 1];
 var nps=4;
 var transpose=24;
 
-function mix(a, b){
+function mix(a, b) {
   return a+b-a*b;
 }
 
@@ -47,12 +47,12 @@ function drumWave(t){
               bell[Math.floor((nps*t)%bell.length)]*squareWave(((t*nps)%1), 1600, 0.25)*squareWave(((t*nps)%1), 200, 0.05)/(25*((t*nps)%1)+0.5));
 }
 
-function fadeIn(t, a, m){
-  return a * Math.pow((nps*t)%1, m)
+function fadeIn(t, a, m) {
+  return a * Math.pow((nps*t)%1, m);
 }
 
-function fadeOut(t, a, m){
-  return a * Math.pow(1-(nps*t)%1, m)
+function fadeOut(t, a, m) {
+  return a * Math.pow(1-(nps*t)%1, m);
 }
 
 export function dsp(t){
