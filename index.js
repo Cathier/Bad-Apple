@@ -15,7 +15,10 @@ var nps=4;
 var transpose=24;
 
 function mix(a, b) {
-  return a+b-a*b;
+  if(a<0 && b<0)
+    return a+b+a*b;
+  else
+    return a+b-a*b;
 }
 
 function note(n) {
@@ -35,10 +38,6 @@ function squareWave(t, f, d) {
     return 1;
   else
     return -1;
-}
-
-function sineWave(t, f) {
-  return Math.sin(Math.PI*2*t*f);
 }
 
 function drumWave(t){
