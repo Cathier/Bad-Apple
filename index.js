@@ -40,10 +40,14 @@ function squareWave(t, f, d) {
     return -1;
 }
 
+function sineWave(t, f, d) {
+  return Math.sin(t*f*2*Math.PI);
+}
+
 function drumWave(t){
-  return mix(mix(bass[Math.floor((nps*t)%bass.length)]*squareWave(((t*nps)%1), 30, 0.5)/(20*((t*nps)%1)+0.5),
-              tom[Math.floor((nps*t)%tom.length)]*squareWave(((t*nps)%1), 120, 0.5)/(50*((t*nps)%1)+0.5)),
-              bell[Math.floor((nps*t)%bell.length)]*squareWave(((t*nps)%1), 1600, 0.25)*squareWave(((t*nps)%1), 200, 0.05)/(25*((t*nps)%1)+0.5));
+  return mix(mix(bass[Math.floor((nps*t)%bass.length)]*sineWave(((t*nps)%1), 30, 0.5)/(20*((t*nps)%1)+0.5),
+              tom[Math.floor((nps*t)%tom.length)]*sineWave(((t*nps)%1), 120, 0.5)/(50*((t*nps)%1)+0.5)),
+              bell[Math.floor((nps*t)%bell.length)]*sineWave(((t*nps)%1), 1600, 0.25)*sineWave(((t*nps)%1), 200, 0.05)/(25*((t*nps)%1)+0.5));
 }
 
 function fadeIn(t, a, m) {
@@ -55,9 +59,9 @@ function fadeOut(t, a, m) {
 }
 
 export function dsp(t){
-  var main=0.5*squareWave(t, note(rightNote(t)), 0.85)+0.5*squareWave(t, note(leftNote(t)), 0.25);
+  var main=0.75*sineWave(t, note(rightNote(t)), 0.85)+1*sineWave(t, note(leftNote(t)), 0.25);
   var drums=drumWave(t);
-  return mix(0.8*fadeIn(t, fadeOut(t, main, 0.25), 0.1), drums);
+  return mix(fadeIn(t, fadeIn(t, fadeOut(t, main, 0.5), 0.5), 0.1), drums);
 }
 
 
